@@ -9,6 +9,7 @@
 class EDITranslator {
     constructor() {
         this.transactionCode = null;
+        this.transactionControlNumber = null;
         this.transactionVersion = null;
         this.transactionCodeRegex = /[0-9]{3}/; 
         this.transactionCodePrefixRegex = /^(ST[*])/m; // This regex ensures we are only reading the ST at the first of the line
@@ -24,6 +25,7 @@ class EDITranslator {
      * 
      */
     resolve(_f) {
+        // TODO apparently the version can be overridden in ST03, for now - we pick it out of GS08...
         let versionLocation = _f.indexOf('*X*');
         if(versionLocation > -1) {
             this.transactionVersion = parseInt(_f.substring((versionLocation + 3), (versionLocation + 9)));
@@ -32,8 +34,10 @@ class EDITranslator {
         let prefixLocation = _f.indexOf('ST*');
         if(prefixLocation > -1) {
             this.transactionCode = _f.substring((prefixLocation + 3),(prefixLocation + 6));
+            this.transactionControlNumber = _f.substring((prefixLocation + 7), (prefixLocation + 16));
         }
 
+        
         return true;
     }
 }
