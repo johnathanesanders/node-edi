@@ -14,6 +14,7 @@ process.argv.forEach((v,i) => {
     }
 });
 
+
 if(inputFile) {
     fs.readFile(inputFile, 'utf8', (err, fd) => {
         if(err) throw err;

@@ -14,6 +14,7 @@ class EDITranslator {
         this.transactionCodePrefixRegex = /^(ST[*])/m; // This regex ensures we are only reading the ST at the first of the line
     }
     
+
     /**
      * 
      * The resolve method examines the contents of the string passed and extracts the EDI transaction code
